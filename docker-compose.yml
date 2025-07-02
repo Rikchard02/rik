@@ -1,0 +1,26 @@
+# Define a versão do formato do arquivo Docker Compose. A versão '3.8' é moderna e recomendada.
+version: '3.8'
+
+# A seção 'services' é onde definimos os contêineres que compõem nossa aplicação.
+services:
+  # 'api' é o nome que damos ao nosso serviço/contêiner da aplicação FastAPI.
+  api:
+    # A instrução 'build: .' diz ao Docker Compose para construir uma imagem a partir do Dockerfile
+    # localizado no diretório atual (representado pelo '.').
+    build: .
+    # Define um nome customizado para o contêiner, facilitando a sua identificação
+    # ao usar comandos como 'docker ps'.
+    container_name: imersao_devops_api
+    # A seção 'ports' mapeia portas entre a máquina host e o contêiner.
+    # O formato é "HOST:CONTAINER".
+    ports:
+      # Mapeia a porta 8000 da sua máquina para a porta 8000 dentro do contêiner.
+      # Isso permite que você acesse a API em http://localhost:8000.
+      - "8000:8000"
+    # A seção 'volumes' monta um diretório do host para dentro do contêiner.
+    volumes:
+      # Monta o diretório atual ('.') do seu projeto no host para o diretório '/app' no contêiner.
+      # Isso cria um "espelho" do seu código. Qualquer alteração que você fizer localmente
+      # será refletida instantaneamente no contêiner, o que é ideal para desenvolvimento,
+      # pois o Uvicorn com '--reload' detectará as mudanças e reiniciará o servidor.
+      - .:/app
